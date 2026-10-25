@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRF Robotics Club — Instrument Lending</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>TRF Robotics Club</h1>
+    <span class="tagline">Instrument Lending Management</span>
+</header>
+<div class="brand-stripe">
+    <span style="background: var(--tone-blue)"></span>
+    <span style="background: var(--tone-teal)"></span>
+    <span style="background: var(--tone-orange)"></span>
+    <span style="background: var(--tone-amber)"></span>
+    <span style="background: var(--tone-red)"></span>
+</div>
+
+<nav>
+    <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+    <button class="tab-btn" data-tab="instruments">Instruments</button>
+    <button class="tab-btn" data-tab="members">Members</button>
+    <button class="tab-btn" data-tab="lend">Lend</button>
+    <button class="tab-btn" data-tab="records">Records</button>
+</nav>
+
+<main>
+
+    <!-- ================= DASHBOARD ================= -->
+    <section id="tab-dashboard" class="tab active">
+        <div class="section-row">
+            <h2>Dashboard</h2>
+            <span class="muted" id="dashboard-today"></span>
+        </div>
+        <div class="panel">
+            <div class="stat-grid" id="stat-grid"></div>
+        </div>
+
+        <div class="panel panel-critical">
+            <h2>Overdue Items</h2>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Record ID</th>
+                            <th>Instrument</th>
+                            <th>Borrower</th>
+                            <th>Due Date</th>
+                            <th>Days Overdue</th>
+                            <th>Fine</th>
+                        </tr>
+                    </thead>
+                    <tbody id="overdue-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= INSTRUMENTS ================= -->
+    <section id="tab-instruments" class="tab">
+        <div class="panel">
+            <h2>Add Instrument</h2>
+            <form id="form-add-instrument">
+                <div>
+                    <label for="ins-category">Category</label>
+                    <select id="ins-category" name="category" required>
+                        <option value="Electronic Component">Electronic Component</option>
+                        <option value="Tool">Tool</option>
+                        <option value="Power Device">Power Device</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="ins-name">Name</label>
+                    <input type="text" id="ins-name" name="name" required>
+                </div>
+                <div>
+                    <label for="ins-qty">Total Quantity</label>
+                    <input type="number" id="ins-qty" name="totalQuantity" min="1" value="1" required>
+                </div>
+                <div>
+                    <label for="ins-condition">Condition</label>
+                    <select id="ins-condition" name="condition">
+                        <option value="New">New</option>
+                        <option value="Good" selected>Good</option>
+                        <option value="Fair">Fair</option>
+                        <option value="Damaged">Damaged</option>
+                    </select>
+                </div>
+                <div id="ins-extra-text-wrap">
+                    <label id="ins-extra-label" for="ins-extra-text">Voltage Rating</label>
+                    <input type="text" id="ins-extra-text" placeholder="e.g. 5V">
+                </div>
+                <div id="ins-extra-checkbox-wrap" style="display:none;">
+                    <label>&nbsp;</label>
+                    <div class="checkbox-row">
+                        <input type="checkbox" id="ins-extra-checkbox">
+                        <span>Requires training</span>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit">Add Instrument</button>
+                </div>
+            </form>
+            <div class="error-box" id="err-add-instrument"></div>
+        </div>
+
+        <div class="panel">
+            <div class="section-row">
+                <h2>Instruments</h2>
+            </div>
+            <form class="filters" id="form-search-instruments">
+                <div>
+                    <label for="search-q">Search name</label>
+                    <input type="text" id="search-q" name="q" placeholder="e.g. Arduino">
+                </div>
+                <div>
+                    <label for="search-category">Category</label>
+                    <select id="search-category" name="category">
+                        <option value="">All categories</option>
+                        <option value="Electronic Component">Electronic Component</option>
+                        <option value="Tool">Tool</option>
+                        <option value="Power Device">Power Device</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="submit">Search</button>
+                </div>
+            </form>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Available/Total</th>
+                            <th>Condition</th>
+                            <th>Details</th>
+                            <th>Max Days</th>
+                            <th>Fine/Day</th>
+                            <th>Update Condition</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="instruments-table-body"></tbody>
+                </table>
+            </div>
+            <div class="error-box" id="err-instruments-list"></div>
+        </div>
+    </section>
+
+    <!-- ================= MEMBERS ================= -->
+    <section id="tab-members" class="tab">
+        <div class="panel">
+            <h2>Add Member</h2>
+            <form id="form-add-member">
+                <div>
+                    <label for="mem-name">Full Name</label>
+                    <input type="text" id="mem-name" name="name" required>
+                </div>
+                <div>
+                    <label for="mem-phone">Phone</label>
+                    <input type="text" id="mem-phone" name="phone" required>
+                </div>
+                <div>
+                    <label for="mem-email">Email</label>
+                    <input type="email" id="mem-email" name="email" required>
+                </div>
+                <div>
+                    <label for="mem-roll">PRN</label>
+                    <input type="text" id="mem-roll" name="rollNo" placeholder="e.g. 21CS1234" required>
+                </div>
+                <div>
+                    <label for="mem-branch">Branch</label>
+                    <input type="text" id="mem-branch" name="branch" placeholder="e.g. Computer Science" required>
+                </div>
+                <div>
+                    <label for="mem-division">Division</label>
+                    <input type="text" id="mem-division" name="division" placeholder="e.g. A" required>
+                </div>
+                <div>
+                    <label for="mem-year">Year</label>
+                    <input type="number" id="mem-year" name="year" min="1" max="6" value="1" required>
+                </div>
+                <div>
+                    <label>&nbsp;</label>
+                    <div class="checkbox-row">
+                        <input type="checkbox" id="mem-iscore">
+                        <span>Core member</span>
+                    </div>
+                </div>
+                <div id="mem-position-wrap" style="display:none;">
+                    <label for="mem-position">Position</label>
+                    <input type="text" id="mem-position" placeholder="e.g. Electronics Head">
+                </div>
+                <div>
+                    <button type="submit">Add Member</button>
+                </div>
+            </form>
+            <div class="error-box" id="err-add-member"></div>
+        </div>
+
+        <div class="panel">
+            <h2>Members</h2>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>PRN</th>
+                            <th>Branch</th>
+                            <th>Division</th>
+                            <th>Year</th>
+                            <th>Position</th>
+                            <th>Borrow Limit</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="members-table-body"></tbody>
+                </table>
+            </div>
+            <div class="error-box" id="err-members-list"></div>
+        </div>
+    </section>
+
+    <!-- ================= LEND ================= -->
+    <section id="tab-lend" class="tab">
+        <div class="panel">
+            <h2>Issue an Instrument</h2>
+            <form id="form-issue">
+                <div>
+                    <label for="issue-instrument">Instrument</label>
+                    <select id="issue-instrument" name="instrumentId" required></select>
+                </div>
+                <div>
+                    <label for="issue-borrower-name">Borrower Name</label>
+                    <input type="text" id="issue-borrower-name" name="borrowerName" placeholder="e.g. Aarav" required>
+                </div>
+                <div>
+                    <label for="issue-borrower-surname">Surname</label>
+                    <input type="text" id="issue-borrower-surname" name="borrowerSurname" placeholder="e.g. Sharma">
+                </div>
+                <div>
+                    <label for="issue-borrower-branch">Branch</label>
+                    <input type="text" id="issue-borrower-branch" name="borrowerBranch" placeholder="e.g. Computer Science" required>
+                </div>
+                <div>
+                    <label for="issue-borrower-division">Division</label>
+                    <input type="text" id="issue-borrower-division" name="borrowerDivision" placeholder="e.g. A" required>
+                </div>
+                <div>
+                    <label for="issue-borrower-prn">PRN</label>
+                    <input type="text" id="issue-borrower-prn" name="borrowerPrn" placeholder="e.g. 21CS1234" required>
+                </div>
+                <div>
+                    <label for="issue-borrower-email">Email (optional)</label>
+                    <input type="email" id="issue-borrower-email" name="borrowerEmail" placeholder="e.g. name@example.com">
+                </div>
+                <div>
+                    <label for="issue-lentby">Lent By (core member)</label>
+                    <select id="issue-lentby" name="lentById" required></select>
+                </div>
+                <div>
+                    <label for="issue-qty">Quantity</label>
+                    <input type="number" id="issue-qty" name="quantity" min="1" value="1" required>
+                </div>
+                <div>
+                    <label for="issue-days">Number of Days</label>
+                    <input type="number" id="issue-days" name="days" min="1" value="7" required>
+                </div>
+                <div>
+                    <label for="issue-date">Issue Date</label>
+                    <input type="date" id="issue-date" name="issueDate">
+                </div>
+                <div>
+                    <button type="submit">Issue</button>
+                </div>
+            </form>
+            <div class="error-box" id="err-issue"></div>
+        </div>
+
+        <div class="panel">
+            <h2>Return an Instrument</h2>
+            <form id="form-return">
+                <div>
+                    <label for="return-record">Active Record</label>
+                    <select id="return-record" name="recordId" required></select>
+                </div>
+                <div>
+                    <label for="return-date">Return Date</label>
+                    <input type="date" id="return-date" name="returnDate">
+                </div>
+                <div>
+                    <label for="return-condition">Condition on Return (optional)</label>
+                    <select id="return-condition" name="condition">
+                        <option value="">No change</option>
+                        <option value="New">New</option>
+                        <option value="Good">Good</option>
+                        <option value="Fair">Fair</option>
+                        <option value="Damaged">Damaged</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="submit">Return</button>
+                </div>
+            </form>
+            <div class="error-box" id="err-return"></div>
+        </div>
+    </section>
+
+    <!-- ================= RECORDS ================= -->
+    <section id="tab-records" class="tab">
+        <div class="panel">
+            <div class="section-row">
+                <h2>Lending Records</h2>
+            </div>
+            <form class="filters" id="form-filter-records">
+                <div>
+                    <label for="rec-status">Status</label>
+                    <select id="rec-status" name="status">
+                        <option value="">All</option>
+                        <option value="Issued">Issued</option>
+                        <option value="Overdue">Overdue</option>
+                        <option value="Returned">Returned</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="rec-member">Borrower Name</label>
+                    <input type="text" id="rec-member" name="member" placeholder="e.g. Aarav">
+                </div>
+                <div>
+                    <label for="rec-instrument">Instrument Name</label>
+                    <input type="text" id="rec-instrument" name="instrument" placeholder="e.g. Arduino">
+                </div>
+                <div>
+                    <button type="submit">Filter</button>
+                </div>
+            </form>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Record ID</th>
+                            <th>Instrument</th>
+                            <th>Qty</th>
+                            <th>Borrower</th>
+                            <th>Borrower Info</th>
+                            <th>Lent By</th>
+                            <th>Issue Date</th>
+                            <th>Due Date</th>
+                            <th>Return Date</th>
+                            <th>Status</th>
+                            <th>Days Overdue</th>
+                            <th>Fine</th>
+                            <th>Reminder</th>
+                        </tr>
+                    </thead>
+                    <tbody id="records-table-body"></tbody>
+                </table>
+            </div>
+            <div class="error-box" id="err-records-list"></div>
+        </div>
+    </section>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

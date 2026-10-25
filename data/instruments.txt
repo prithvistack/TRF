@@ -1,0 +1,10 @@
+ELECTRONIC|INS-001|Arduino Uno R3|6|2|Good|5V
+ELECTRONIC|INS-002|ESP32 Dev Board|5|5|Good|3.3V
+ELECTRONIC|INS-003|IR Proximity Sensor|10|10|Good|5V
+ELECTRONIC|INS-004|L298N Motor Driver|4|2|Fair|12V
+TOOL|INS-005|Soldering Iron 40W|3|2|Good|1
+TOOL|INS-006|Digital Multimeter|4|4|New|0
+POWER|INS-007|LiPo Battery 2200mAh|8|8|Good|2200mAh
+ELECTRONIC|INS-010|Rasberry pi|6|6|Fair|5v
+ELECTRONIC|INS-011|arduino uno q|4|2|Good|5v
+ELECTRONIC|INS-012|Arduino Uno q|5|5|Fair|10v

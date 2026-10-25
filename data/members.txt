@@ -1,0 +1,12 @@
+MEMBER|MEM-001|Aarav Sharma|9800000001|aarav@example.com|21ME101|Mechanical|A|3|0
+MEMBER|MEM-002|Priya Nair|9800000002|priya@example.com|21EC045|Electronics|B|2|0
+MEMBER|MEM-003|Rohan Gupta|9800000003|rohan@example.com|22CS077|Computer Science|A|1|0
+CORE|MEM-004|Sanya Iyer|9800000004|sanya@example.com|20EC010|Electronics|A|4|Electronics Head
+CORE|MEM-005|Kabir Mehta|9800000005|kabir@example.com|20ME020|Mechanical|B|4|Mechanical Head
+MEMBER|MEM-008|Avadhi Jain|-|-|1251070457|CS|B|1|1
+MEMBER|MEM-009|Saachi Biyani|-|-|1251070345|AIML|A|1|1
+CORE|MEM-010|Gargi|8756342|gargi@vit.edu|124134|cs|b|3|Chairperson
+MEMBER|MEM-011|Aarav sharma|-|-|23445|ai|d|1|1
+MEMBER|MEM-012|TestWalkIn Verify|-|-|99ZZ0001|CS|Z|1|1
+MEMBER|MEM-013|Neha Kulkarni|-|neha.test@example.com|22CS9001|Computer Science|C|1|1
+MEMBER|MEM-014|Ashutosh Verma|-|ash@vit.edu|1254321|aids|b|1|1

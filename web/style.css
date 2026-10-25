@@ -1,0 +1,337 @@
+/* Plain, sober styling: neutral background, one accent colour, bordered
+   tables, plus a small validated status palette (blue/green/orange/teal/
+   red/amber) used only to give the dashboard stat tiles meaning - a
+   colour always pairs with its label and number, never replaces them. */
+:root {
+    --accent: #205072;
+    --accent-dark: #163a52;
+    --bg: #f5f5f5;
+    --panel: #ffffff;
+    --border: #d6d6d6;
+    --text: #222222;
+    --muted: #666666;
+    --danger: #a13333;
+    --ok: #2e7d32;
+    --warn: #b06a00;
+
+    /* Status/tone accents for dashboard stat tiles - used as a left
+       border + faint tint only; the number itself always stays in the
+       normal text colour (colour never carries the value on its own). */
+    --tone-blue: #2a78d6;
+    --tone-green: #0ca30c;
+    --tone-orange: #eb6834;
+    --tone-teal: #1baf7a;
+    --tone-red: #d03b3b;
+    --tone-amber: #eda100;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, Segoe UI, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+header {
+    background: var(--accent);
+    color: #ffffff;
+    padding: 28px 24px 22px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.1rem;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    line-height: 1.15;
+}
+
+header .tagline {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* A thin, flat-colour stripe under the header - purely decorative, no
+   gradients, just a few of the validated status/tone colours in a row. */
+.brand-stripe {
+    display: flex;
+    height: 5px;
+}
+
+.brand-stripe span {
+    flex: 1;
+}
+
+nav {
+    display: flex;
+    gap: 4px;
+    background: var(--accent-dark);
+    padding: 0 16px;
+}
+
+nav button {
+    background: none;
+    border: none;
+    color: #e6e6e6;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    border-bottom: 3px solid transparent;
+}
+
+nav button:hover {
+    color: #ffffff;
+}
+
+nav button.active {
+    color: #ffffff;
+    border-bottom-color: #ffffff;
+    font-weight: 600;
+}
+
+main {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 0 16px 40px;
+}
+
+.tab {
+    display: none;
+}
+
+.tab.active {
+    display: block;
+}
+
+h2 {
+    font-size: 1.1rem;
+    margin: 0 0 12px;
+    color: var(--accent-dark);
+}
+
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(11, 11, 11, 0.06);
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 14px;
+}
+
+.stat-box {
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--tone, var(--accent));
+    border-radius: 6px;
+    padding: 14px 16px;
+    background: var(--panel);
+    box-shadow: 0 1px 3px rgba(11, 11, 11, 0.06);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.stat-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(11, 11, 11, 0.1);
+}
+
+.stat-box.tone-blue   { --tone: var(--tone-blue); }
+.stat-box.tone-green  { --tone: var(--tone-green); }
+.stat-box.tone-orange { --tone: var(--tone-orange); }
+.stat-box.tone-teal   { --tone: var(--tone-teal); }
+.stat-box.tone-red    { --tone: var(--tone-red); }
+.stat-box.tone-amber  { --tone: var(--tone-amber); }
+
+.stat-box .value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.1;
+    font-variant-numeric: proportional-nums;
+}
+
+.stat-box .label {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 6px;
+    font-weight: 600;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+table th,
+table td {
+    border: 1px solid var(--border);
+    padding: 6px 8px;
+    text-align: left;
+}
+
+table th {
+    background: #eef1f3;
+    font-weight: 600;
+}
+
+table tr:nth-child(even) {
+    background: #fafafa;
+}
+
+form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    align-items: end;
+}
+
+form.filters {
+    margin-bottom: 12px;
+}
+
+label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 4px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    background: #ffffff;
+    color: var(--text);
+}
+
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.checkbox-row input {
+    width: auto;
+}
+
+button.primary,
+form button[type="submit"] {
+    background: var(--accent);
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    height: 34px;
+}
+
+button.primary:hover,
+form button[type="submit"]:hover {
+    background: var(--accent-dark);
+}
+
+button.danger {
+    background: none;
+    border: 1px solid var(--danger);
+    color: var(--danger);
+    padding: 4px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+button.danger:hover {
+    background: var(--danger);
+    color: #ffffff;
+}
+
+button.secondary {
+    background: none;
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.error-box {
+    color: var(--danger);
+    background: #fbeaea;
+    border: 1px solid #eecaca;
+    border-radius: 3px;
+    padding: 8px 10px;
+    margin-top: 10px;
+    font-size: 0.85rem;
+    display: none;
+}
+
+.error-box.show {
+    display: block;
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.badge-issued {
+    color: var(--accent-dark);
+    background: #e3edf2;
+}
+
+.badge-overdue {
+    color: var(--danger);
+    background: #fbeaea;
+}
+
+.badge-returned {
+    color: var(--ok);
+    background: #e8f3e8;
+}
+
+.section-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.muted {
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+.table-scroll {
+    overflow-x: auto;
+}
+
+/* Flags a panel as needing attention (currently: Overdue Items) - a top
+   accent bar in the same critical red as the overdue badge/stat tile. */
+.panel-critical {
+    border-top: 3px solid var(--tone-red);
+}
